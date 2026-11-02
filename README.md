@@ -117,8 +117,8 @@ Akses setiap fitur tetap ditentukan oleh middleware dan otorisasi di sisi server
 1. Clone repository dan masuk ke direktori proyek:
 
    ```bash
-   git clone https://github.com/Nightfall5/My-Project.git
-   cd My-Project
+   git clone https://github.com/Nightfall5/MinatBakat-TI.git
+   cd MinatBakat-TI
    ```
 
 2. Install dependency backend dan frontend:
