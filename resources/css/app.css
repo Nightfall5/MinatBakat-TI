@@ -1,0 +1,501 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-brand-navy text-brand-light font-sans antialiased selection:bg-brand-purple selection:text-white;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+}
+
+/* Glassmorphism & Custom Accents */
+.glass-panel {
+    background: rgba(18, 26, 43, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(36, 50, 82, 0.8);
+}
+
+.glass-panel-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel-hover:hover {
+    background: rgba(24, 34, 56, 0.9);
+    border-color: rgba(34, 211, 238, 0.5);
+    box-shadow: 0 0 25px -5px rgba(34, 211, 238, 0.25);
+    transform: translateY(-2px);
+}
+
+.glass-panel-purple-hover:hover {
+    background: rgba(24, 34, 56, 0.9);
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.3);
+    transform: translateY(-2px);
+}
+
+.glow-text-cyan {
+    text-shadow: 0 0 16px rgba(34, 211, 238, 0.6);
+}
+
+.glow-text-purple {
+    text-shadow: 0 0 16px rgba(139, 92, 246, 0.6);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0B1020;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #243252;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3B4D75;
+}
+
+/* Spider Cursor Click Web Effect Ripple */
+.spider-web-ripple {
+    position: fixed;
+    pointer-events: none;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: spiderRippleAnim 0.75s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+    z-index: 99998;
+}
+
+@keyframes spiderRippleAnim {
+    0% {
+        width: 0px;
+        height: 0px;
+        opacity: 0.9;
+        border: 2px solid #22D3EE;
+        box-shadow: 0 0 15px #22D3EE, inset 0 0 10px #8B5CF6;
+    }
+    100% {
+        width: 140px;
+        height: 140px;
+        opacity: 0;
+        border: 1px solid #8B5CF6;
+        box-shadow: 0 0 25px rgba(139, 92, 246, 0);
+    }
+}
+
+/* ==========================================================================
+   Cosmic Header Effects (Quantum Horizon Beam & Aurora Mist)
+   ========================================================================== */
+.cosmic-quantum-beam {
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(34, 211, 238, 0.2) 15%, 
+        #22D3EE 35%, 
+        #8B5CF6 50%, 
+        #EC4899 65%, 
+        #F59E0B 80%, 
+        transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: quantumBeamFlow 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.7));
+}
+
+@keyframes quantumBeamFlow {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+@keyframes cosmicAurora {
+    0%, 100% {
+        transform: translateX(-5%) translateY(0) scale(1);
+        opacity: 0.45;
+    }
+    50% {
+        transform: translateX(5%) translateY(4px) scale(1.15);
+        opacity: 0.85;
+    }
+}
+
+.animate-cosmic-aurora {
+    animation: cosmicAurora 8s ease-in-out infinite;
+}
+
+@keyframes spinSlow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin-slow {
+    animation: spinSlow 12s linear infinite;
+}
+
+/* Light mode adjustments for quantum beam */
+html.light .cosmic-quantum-beam,
+html:not(.dark) .cosmic-quantum-beam {
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(2, 132, 199, 0.2) 15%, 
+        #0284C7 35%, 
+        #7C3AED 50%, 
+        #DB2777 65%, 
+        #D97706 80%, 
+        transparent 100%
+    );
+    background-size: 200% 100%;
+    filter: drop-shadow(0 0 4px rgba(2, 132, 199, 0.5));
+}
+
+/* ==========================================================================
+   Real Video Background (Galaxy Big Bang) & Contrast Tuning
+   ========================================================================== */
+#bigbang-bg-video {
+    filter: saturate(1.25) contrast(1.15) brightness(0.92);
+}
+
+html.light #bigbang-bg-video,
+html:not(.dark) #bigbang-bg-video {
+    opacity: 0.38;
+    filter: saturate(1.1) contrast(1.05) brightness(1.04);
+}
+
+html.light #video-overlay,
+html:not(.dark) #video-overlay {
+    background-color: rgba(248, 250, 252, 0.78) !important;
+    backdrop-filter: brightness(1.04) contrast(1.02) !important;
+}
+
+/* ==========================================================================
+   Light Mode Theme Support
+   Adapts all surfaces, typography, cards, and forms smoothly
+   ========================================================================== */
+html.light body,
+html:not(.dark) body {
+    background-color: #F8FAFC !important;
+    color: #0F172A !important;
+}
+
+/* Surfaces & Backgrounds */
+html.light .bg-brand-navy,
+html:not(.dark) .bg-brand-navy {
+    background-color: #F8FAFC !important;
+}
+
+html.light .bg-brand-navy\/80,
+html:not(.dark) .bg-brand-navy\/80 {
+    background-color: rgba(248, 250, 252, 0.88) !important;
+}
+
+html.light .bg-brand-surface,
+html:not(.dark) .bg-brand-surface {
+    background-color: #FFFFFF !important;
+}
+
+html.light .bg-brand-surface\/40,
+html:not(.dark) .bg-brand-surface\/40 {
+    background-color: rgba(241, 245, 249, 0.75) !important;
+}
+
+html.light .bg-brand-surface\/60,
+html:not(.dark) .bg-brand-surface\/60,
+html.light .bg-brand-surface\/90,
+html:not(.dark) .bg-brand-surface\/90,
+html.light .bg-brand-surface\/95,
+html:not(.dark) .bg-brand-surface\/95 {
+    background-color: rgba(255, 255, 255, 0.92) !important;
+}
+
+html.light .bg-brand-card,
+html:not(.dark) .bg-brand-card {
+    background-color: #FFFFFF !important;
+}
+
+html.light .bg-brand-cardhover:hover,
+html:not(.dark) .bg-brand-cardhover:hover {
+    background-color: #F1F5F9 !important;
+}
+
+html.light .bg-slate-900,
+html:not(.dark) .bg-slate-900,
+html.light .bg-slate-900\/80,
+html:not(.dark) .bg-slate-900\/80,
+html.light .bg-slate-900\/60,
+html:not(.dark) .bg-slate-900\/60,
+html.light .bg-slate-800,
+html:not(.dark) .bg-slate-800,
+html.light .bg-slate-800\/50,
+html:not(.dark) .bg-slate-800\/50 {
+    background-color: #F1F5F9 !important;
+    color: #1E293B !important;
+}
+
+/* Borders */
+html.light .border-brand-border,
+html:not(.dark) .border-brand-border,
+html.light .border-brand-border\/60,
+html:not(.dark) .border-brand-border\/60,
+html.light .border-brand-border\/80,
+html:not(.dark) .border-brand-border\/80,
+html.light .border-slate-700\/60,
+html:not(.dark) .border-slate-700\/60 {
+    border-color: #E2E8F0 !important;
+}
+
+/* Glass Panels */
+html.light .glass-panel,
+html:not(.dark) .glass-panel {
+    background: rgba(255, 255, 255, 0.88) !important;
+    border: 1px solid rgba(226, 232, 240, 0.95) !important;
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04) !important;
+}
+
+html.light .glass-panel-hover:hover,
+html:not(.dark) .glass-panel-hover:hover {
+    background: rgba(255, 255, 255, 0.98) !important;
+    border-color: rgba(6, 182, 212, 0.6) !important;
+    box-shadow: 0 12px 28px -4px rgba(6, 182, 212, 0.16) !important;
+}
+
+html.light .glass-panel-purple-hover:hover,
+html:not(.dark) .glass-panel-purple-hover:hover {
+    background: rgba(255, 255, 255, 0.98) !important;
+    border-color: rgba(139, 92, 246, 0.6) !important;
+    box-shadow: 0 12px 28px -4px rgba(139, 92, 246, 0.18) !important;
+}
+
+/* Typography in Light Mode */
+html.light h1:not([class*="bg-clip-text"]),
+html.light h2:not([class*="bg-clip-text"]),
+html.light h3:not([class*="bg-clip-text"]),
+html.light h4:not([class*="bg-clip-text"]),
+html:not(.dark) h1:not([class*="bg-clip-text"]),
+html:not(.dark) h2:not([class*="bg-clip-text"]),
+html:not(.dark) h3:not([class*="bg-clip-text"]),
+html:not(.dark) h4:not([class*="bg-clip-text"]) {
+    color: #0F172A !important;
+}
+
+html.light p.text-white,
+html.light span.text-white,
+html:not(.dark) p.text-white,
+html:not(.dark) span.text-white {
+    color: #0F172A !important;
+}
+
+/* Ensure buttons with colored/gradient backgrounds keep their white text */
+html.light a[class*="bg-gradient"] *,
+html.light button[class*="bg-gradient"] *,
+html.light .bg-brand-purple *,
+html.light .bg-emerald-500 *,
+html.light .bg-rose-500 *,
+html.light .bg-amber-500 *,
+html:not(.dark) a[class*="bg-gradient"] *,
+html:not(.dark) button[class*="bg-gradient"] *,
+html:not(.dark) .bg-brand-purple *,
+html:not(.dark) .bg-emerald-500 *,
+html:not(.dark) .bg-rose-500 *,
+html:not(.dark) .bg-amber-500 * {
+    color: #FFFFFF !important;
+}
+
+html.light a[class*="bg-gradient"],
+html.light button[class*="bg-gradient"],
+html.light .bg-brand-purple,
+html:not(.dark) a[class*="bg-gradient"],
+html:not(.dark) button[class*="bg-gradient"],
+html:not(.dark) .bg-brand-purple {
+    color: #FFFFFF !important;
+}
+
+html.light .text-slate-200,
+html.light .text-slate-300,
+html:not(.dark) .text-slate-200,
+html:not(.dark) .text-slate-300 {
+    color: #334155 !important;
+}
+
+html.light .text-slate-400,
+html.light .text-brand-muted,
+html:not(.dark) .text-slate-400,
+html:not(.dark) .text-brand-muted {
+    color: #64748B !important;
+}
+
+html.light .text-brand-light,
+html:not(.dark) .text-brand-light {
+    color: #0F172A !important;
+}
+
+/* Form Inputs */
+html.light input:not([type="checkbox"]):not([type="radio"]),
+html.light select,
+html.light textarea,
+html:not(.dark) input:not([type="checkbox"]):not([type="radio"]),
+html:not(.dark) select,
+html:not(.dark) textarea {
+    background-color: #FFFFFF !important;
+    color: #0F172A !important;
+    border-color: #CBD5E1 !important;
+}
+
+html.light input::placeholder,
+html:not(.dark) input::placeholder {
+    color: #94A3B8 !important;
+}
+
+/* Scrollbar in Light Mode */
+html.light ::-webkit-scrollbar-track,
+html:not(.dark) ::-webkit-scrollbar-track {
+    background: #F1F5F9;
+}
+
+html.light ::-webkit-scrollbar-thumb,
+html:not(.dark) ::-webkit-scrollbar-thumb {
+    background: #CBD5E1;
+}
+
+html.light ::-webkit-scrollbar-thumb:hover,
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+    background: #94A3B8;
+}
+
+/* ==========================================================================
+   Smooth Page Transitions & Cosmic Progress Indicator
+   ========================================================================== */
+
+/* Cross-Document View Transitions (Chromium / Modern Browsers) */
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root) {
+    animation: 260ms cubic-bezier(0.4, 0, 0.2, 1) both fadeOutAndSlide;
+}
+
+::view-transition-new(root) {
+    animation: 320ms cubic-bezier(0, 0, 0.2, 1) both fadeInAndSlide;
+}
+
+@keyframes fadeOutAndSlide {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0px);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.995);
+        filter: blur(1.5px);
+    }
+}
+
+@keyframes fadeInAndSlide {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.995);
+        filter: blur(1.5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0px);
+    }
+}
+
+/* Cosmic Top Progress Bar */
+#cosmic-page-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    z-index: 99999;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(90deg, #22D3EE 0%, #8B5CF6 50%, #EC4899 100%);
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.9), 0 0 24px rgba(139, 92, 246, 0.7);
+    transition: width 0.24s cubic-bezier(0.1, 0.8, 0.2, 1), opacity 0.2s ease;
+}
+
+#cosmic-page-progress.active {
+    opacity: 1;
+}
+
+#cosmic-page-progress::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: 0;
+    width: 80px;
+    height: 7px;
+    background: radial-gradient(circle, #22D3EE 30%, rgba(236, 72, 153, 0) 80%);
+    box-shadow: 0 0 16px #22D3EE;
+    border-radius: 50%;
+    opacity: 0.9;
+}
+
+/* Page Exit & Enter Animation on <main> */
+main {
+    transition: opacity 0.24s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.24s cubic-bezier(0.4, 0, 0.2, 1),
+                filter 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+}
+
+body.page-transitioning-out main {
+    opacity: 0.35;
+    transform: translateY(-6px) scale(0.996);
+    filter: blur(1px);
+    pointer-events: none;
+}
+
+@keyframes pageContentEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(12px) scale(0.996);
+        filter: blur(1.5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0px);
+    }
+}
+
+.page-enter-active {
+    animation: pageContentEnter 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Accessibility: Disable motion for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    main,
+    .page-enter-active,
+    body.page-transitioning-out main {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+        filter: none !important;
+    }
+    
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none !important;
+    }
+}
+
+
