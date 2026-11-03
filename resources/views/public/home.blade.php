@@ -3,7 +3,7 @@
 @section('title', 'MINBAK TI — Minat, Bakat & Prestasi')
 
 @section('content')
-<!-- MINBAK TI — interactive talent orbit hero -->
+<!-- MINBAK TI — interactive talent network hero -->
 <section class="denty-hero relative">
     <div class="max-w-7xl mx-auto px-0 sm:px-2 lg:px-4">
         <div class="denty-hero-shell minbak-hero-shell">
@@ -49,30 +49,53 @@
                 </div>
             </div>
 
-            <div class="denty-hero-art minbak-orbit-wrap denty-reveal">
-                <div class="minbak-orbit-heading">
-                    <span>MINBAK / TALENT ORBIT</span>
-                    <span class="minbak-orbit-live"><i></i><span id="minbak-scene-status">SCENE READY</span></span>
+            <div class="denty-hero-art minbak-network-wrap denty-reveal">
+                <div class="minbak-network-heading">
+                    <span>MINBAK / TALENT NETWORK</span>
+                    <span class="minbak-network-live"><i></i><span id="minbak-scene-status">NETWORK ACTIVE</span></span>
                 </div>
-                <div class="minbak-scene-stage" id="minbak-scene-stage">
-                    <div class="minbak-scene-glow" aria-hidden="true"></div>
-                    <div class="minbak-css-orbit minbak-css-orbit-one" aria-hidden="true"></div>
-                    <div class="minbak-css-orbit minbak-css-orbit-two" aria-hidden="true"></div>
-                    <div class="minbak-css-core" aria-hidden="true"></div>
-                    <canvas id="minbak-three-canvas" role="img" aria-label="Objek 3D interaktif MINBAK TI. Seret untuk memutar dan aktifkan mode energi untuk melihat perubahan visual."></canvas>
-                    <span class="minbak-scene-coordinate" aria-hidden="true">TALENT<br>FIELD / 01</span>
-                    <span class="minbak-scene-tag minbak-scene-tag-top"><i></i> EXPLORE</span>
-                    <span class="minbak-scene-tag minbak-scene-tag-bottom">DISCOVER · DEVELOP · ACHIEVE</span>
-                    <button class="minbak-energy-toggle" id="minbak-energy-toggle" type="button" aria-pressed="false">
-                        <span aria-hidden="true">✳</span> AKTIFKAN MODE ENERGI
+
+                <div class="minbak-scene-stage minbak-network-stage" id="minbak-scene-stage">
+                    <div class="minbak-network-glow" aria-hidden="true"></div>
+                    <svg class="minbak-network-fallback" viewBox="0 0 600 420" aria-hidden="true">
+                        <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path class="network-line" d="M300 210 L192 142 L105 78 M192 142 L92 190 M300 210 L280 105 L282 45 M300 210 L410 130 L515 80 M410 130 L526 194 M300 210 L420 285 L520 348 M420 285 L365 380 M300 210 L205 292 L92 350 M205 292 L125 235"/>
+                        </g>
+                        <g fill="#fff" stroke="currentColor" stroke-width="3">
+                            <circle cx="300" cy="210" r="22"/><circle cx="192" cy="142" r="13"/><circle cx="280" cy="105" r="13"/><circle cx="410" cy="130" r="13"/><circle cx="420" cy="285" r="13"/><circle cx="205" cy="292" r="13"/>
+                            <circle cx="105" cy="78" r="7"/><circle cx="92" cy="190" r="7"/><circle cx="282" cy="45" r="7"/><circle cx="515" cy="80" r="7"/><circle cx="526" cy="194" r="7"/><circle cx="520" cy="348" r="7"/><circle cx="365" cy="380" r="7"/><circle cx="92" cy="350" r="7"/><circle cx="125" cy="235" r="7"/>
+                        </g>
+                    </svg>
+                    <canvas id="minbak-three-canvas" role="img" aria-label="Jaringan talenta 3D interaktif. Seret untuk mengubah sudut pandang, lalu pilih simpul atau bidang minat untuk menyorot cabangnya."></canvas>
+
+                    <div class="minbak-network-center-label" aria-hidden="true">
+                        <span>MINBAK</span><strong>TI</strong>
+                    </div>
+                    <span class="minbak-scene-coordinate" aria-hidden="true">TALENT MAP<br>NODE / 07</span>
+                    <span class="minbak-scene-tag minbak-scene-tag-top"><i></i> CONNECTED SKILLS</span>
+                    <span class="minbak-scene-tag minbak-scene-tag-bottom">DISCOVER · CONNECT · GROW</span>
+                    <button class="minbak-network-toggle" id="minbak-energy-toggle" type="button" aria-pressed="false">
+                        <span aria-hidden="true">⌁</span> AKTIFKAN ALIRAN
                     </button>
                 </div>
-                <div class="minbak-scene-caption">
-                    <span>SERET UNTUK MEMUTAR</span><i></i><span>KLIK INTI UNTUK BERINTERAKSI</span>
+
+                <div class="minbak-network-selection">
+                    <span class="minbak-network-selection-label">CABANG TERPILIH</span>
+                    <strong id="minbak-selected-field">Pilih salah satu bidang minat</strong>
                 </div>
-                <div class="minbak-orbit-float" aria-hidden="true">
-                    <span class="minbak-float-icon">✦</span>
-                    <span><strong>Talent in motion</strong><small>Explore your potential</small></span>
+
+                @if($categories->isNotEmpty())
+                    <div class="minbak-talent-legend" aria-label="Pilih bidang minat untuk menyorot cabang jaringan">
+                        @foreach($categories->take(7) as $index => $category)
+                            <button type="button" class="minbak-talent-chip" data-talent-index="{{ $index }}" aria-pressed="false">
+                                {{ $category->name }}
+                            </button>
+                        @endforeach
+                    </div>
+                @endif
+
+                <div class="minbak-scene-caption">
+                    <span>SERET UNTUK MELIHAT JARINGAN</span><i></i><span>PILIH SIMPUL UNTUK MENJELAJAHI</span>
                 </div>
             </div>
         </div>
