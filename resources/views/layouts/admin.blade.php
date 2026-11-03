@@ -45,16 +45,14 @@
         
         <!-- Sidebar Brand -->
         <div class="h-20 px-6 flex items-center justify-between border-b border-brand-border/80">
-            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-cyan flex items-center justify-center shadow-glow-combined">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                </div>
-                <div>
-                    <h1 class="text-base font-bold text-white tracking-tight leading-tight">MINBAK TI</h1>
-                    <span class="text-[11px] font-mono uppercase tracking-wider text-brand-cyan">Management Hub</span>
-                </div>
+            <a href="{{ route('admin.dashboard') }}" class="denty-brand">
+                <span class="denty-brand-mark" aria-hidden="true">M</span>
+                <span class="denty-brand-copy">
+                    <span class="denty-brand-name">MINBAK <span>TI</span></span>
+                    <span class="denty-brand-tagline">RUANG PENGELOLAAN</span>
+                </span>
             </a>
-            <button @click="sidebarOpen = false" class="lg:hidden text-slate-400 hover:text-white">
+            <button @click="sidebarOpen = false" class="lg:hidden text-slate-400 hover:text-white" aria-label="Tutup menu">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
