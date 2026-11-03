@@ -1,44 +1,112 @@
 @extends('layouts.app')
 
-@section('title', 'MINBAK TI — Talent & Competition Hub')
+@section('title', 'MINBAK TI — Minat, Bakat & Prestasi')
 
 @section('content')
-<!-- Hero Section -->
-<section class="relative pt-12 pb-20 md:pt-20 md:pb-32 overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="text-center max-w-3xl mx-auto space-y-6">
-            <!-- Badge announcement -->
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-brand-cyan/40 text-xs font-mono text-brand-cyan shadow-glow-cyan animate-pulse-slow">
-                <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
-                <span>DIVISI MINAT DAN BAKAT HMIF {{ date('Y') }}</span>
+<!-- MINBAK TI — interactive talent network hero -->
+<section class="denty-hero relative">
+    <div class="max-w-7xl mx-auto px-0 sm:px-2 lg:px-4">
+        <div class="denty-hero-shell minbak-hero-shell">
+            <div class="denty-hero-copy denty-reveal">
+                <div class="denty-eyebrow">
+                    <span class="denty-eyebrow-dot" aria-hidden="true"></span>
+                    <span>DIVISI MINAT & BAKAT HMIF · {{ date('Y') }}</span>
+                </div>
+
+                <h1 class="denty-hero-title minbak-hero-title">
+                    Kenali potensimu.
+                    <span>Temukan jalurmu.</span>
+                </h1>
+
+                <p class="denty-hero-description">
+                    Setiap mahasiswa punya kekuatan yang bisa dikembangkan. Temukan bidang yang sesuai,
+                    ikuti peluang kompetisi, dan bangun perjalanan prestasimu bersama MINBAK TI.
+                </p>
+
+                <div class="minbak-typing-line" aria-live="polite">
+                    <span class="minbak-typing-label">MULAI DARI</span>
+                    <strong id="minbak-typed-text">Eksplorasi minatmu</strong>
+                    <span class="minbak-typing-caret" aria-hidden="true"></span>
+                </div>
+
+                <div class="denty-hero-actions">
+                    <a href="{{ route('assessment.index') }}" class="denty-btn-primary">
+                        <span>Mulai Asesmen</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6 6 6-6 6"/>
+                        </svg>
+                    </a>
+                    <a href="{{ route('competitions.index') }}" class="denty-btn-secondary">
+                        <span>Jelajahi Kompetisi</span>
+                    </a>
+                </div>
+
+                <div class="denty-hero-note">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v3m0 12v3m9-9h-3M6 12H3m15.36-6.36-2.12 2.12M7.76 16.24l-2.12 2.12m12.72 0-2.12-2.12M7.76 7.76 5.64 5.64"/>
+                    </svg>
+                    <span>Minat · Kompetisi · Partisipasi · Prestasi</span>
+                </div>
             </div>
 
-            <!-- Main Headline -->
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
-                Temukan Potensimu. <br>
-                <span class="bg-gradient-to-r from-brand-cyan via-purple-300 to-brand-purple bg-clip-text text-transparent glow-text-cyan">
-                    Kembangkan Skill-mu.
-                </span> <br>
-                Raih Prestasimu.
-            </h1>
+            <div class="denty-hero-art minbak-network-wrap denty-reveal">
+                <div class="minbak-network-heading">
+                    <span>MINBAK / TALENT NETWORK</span>
+                    <span class="minbak-network-live"><i></i><span id="minbak-scene-status">NETWORK ACTIVE</span></span>
+                </div>
 
-            <!-- Subheadline -->
-            <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
-                Platform Minat dan Bakat Teknik Informatika untuk mengeksplorasi bidang yang kamu sukai, menemukan kompetisi yang relevan, dan membangun rekam jejak prestasi yang terverifikasi.
-            </p>
+                <div class="minbak-scene-stage minbak-network-stage" id="minbak-scene-stage">
+                    <div class="minbak-network-glow" aria-hidden="true"></div>
+                    <svg class="minbak-network-fallback" viewBox="0 0 600 420" aria-hidden="true">
+                        <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path class="network-line" d="M300 210 L192 142 L105 78 M192 142 L92 190 M300 210 L280 105 L282 45 M300 210 L410 130 L515 80 M410 130 L526 194 M300 210 L420 285 L520 348 M420 285 L365 380 M300 210 L205 292 L92 350 M205 292 L125 235"/>
+                        </g>
+                        <g fill="#fff" stroke="currentColor" stroke-width="3">
+                            <circle cx="300" cy="210" r="22"/><circle cx="192" cy="142" r="13"/><circle cx="280" cy="105" r="13"/><circle cx="410" cy="130" r="13"/><circle cx="420" cy="285" r="13"/><circle cx="205" cy="292" r="13"/>
+                            <circle cx="105" cy="78" r="7"/><circle cx="92" cy="190" r="7"/><circle cx="282" cy="45" r="7"/><circle cx="515" cy="80" r="7"/><circle cx="526" cy="194" r="7"/><circle cx="520" cy="348" r="7"/><circle cx="365" cy="380" r="7"/><circle cx="92" cy="350" r="7"/><circle cx="125" cy="235" r="7"/>
+                        </g>
+                    </svg>
+                    <canvas id="minbak-three-canvas" role="img" aria-label="Jaringan talenta 3D interaktif. Seret untuk mengubah sudut pandang, lalu pilih simpul atau bidang minat untuk menyorot cabangnya."></canvas>
 
-            <!-- Action CTAs -->
-            <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="{{ route('assessment.index') }}" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-xl font-bold bg-gradient-to-r from-brand-purple to-brand-cyan hover:opacity-95 text-white shadow-glow-combined transition-all transform hover:-translate-y-0.5">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <span>Temukan Minatku</span>
-                </a>
-                <a href="{{ route('competitions.index') }}" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-xl font-bold bg-brand-card hover:bg-brand-cardhover text-slate-200 border border-brand-border/80 hover:border-brand-cyan/60 transition-all transform hover:-translate-y-0.5">
-                    <svg class="w-5 h-5 text-brand-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                    <span>Jelajahi Kompetisi</span>
-                </a>
+                    <div class="minbak-network-center-label" aria-hidden="true">
+                        <span>MINBAK</span><strong>TI</strong>
+                    </div>
+                    <span class="minbak-scene-coordinate" aria-hidden="true">TALENT MAP<br>NODE / 07</span>
+                    <span class="minbak-scene-tag minbak-scene-tag-top"><i></i> CONNECTED SKILLS</span>
+                    <span class="minbak-scene-tag minbak-scene-tag-bottom">DISCOVER · CONNECT · GROW</span>
+                    <button class="minbak-network-toggle" id="minbak-energy-toggle" type="button" aria-pressed="false">
+                        <span aria-hidden="true">⌁</span> AKTIFKAN ALIRAN
+                    </button>
+                </div>
+
+                <div class="minbak-network-selection">
+                    <span class="minbak-network-selection-label">CABANG TERPILIH</span>
+                    <strong id="minbak-selected-field">Pilih salah satu bidang minat</strong>
+                </div>
+
+                @if($categories->isNotEmpty())
+                    <div class="minbak-talent-legend" aria-label="Pilih bidang minat untuk menyorot cabang jaringan">
+                        @foreach($categories->take(7) as $index => $category)
+                            <button type="button" class="minbak-talent-chip" data-talent-index="{{ $index }}" aria-pressed="false">
+                                {{ $category->name }}
+                            </button>
+                        @endforeach
+                    </div>
+                @endif
+
+                <div class="minbak-scene-caption">
+                    <span>SERET UNTUK MELIHAT JARINGAN</span><i></i><span>PILIH SIMPUL UNTUK MENJELAJAHI</span>
+                </div>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- Moving identity strip, inspired by the portfolio motion system -->
+<section class="minbak-motion-strip" aria-label="MINBAK TI — Eksplorasi, kompetisi, dan prestasi">
+    <div class="minbak-motion-track" aria-hidden="true">
+        <span>EXPLORE YOUR INTEREST</span><b>✳</b><span>DEVELOP YOUR SKILLS</span><b>✳</b><span>JOIN THE COMPETITION</span><b>✳</b><span>CELEBRATE ACHIEVEMENT</span><b>✳</b>
+        <span>EXPLORE YOUR INTEREST</span><b>✳</b><span>DEVELOP YOUR SKILLS</span><b>✳</b><span>JOIN THE COMPETITION</span><b>✳</b><span>CELEBRATE ACHIEVEMENT</span><b>✳</b>
     </div>
 </section>
 
@@ -48,7 +116,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
             <!-- Stat 1: Mahasiswa Terdaftar -->
             <div class="glass-panel rounded-2xl p-6 text-center transform transition-transform hover:-translate-y-1">
-                <div class="text-3xl sm:text-4xl font-extrabold text-brand-cyan mb-1 font-mono">
+                <div class="text-3xl sm:text-4xl font-extrabold text-brand-cyan mb-1 font-mono denty-stat-number" data-count-up="{{ $registeredStudentsCount }}">
                     {{ number_format($registeredStudentsCount) }}
                 </div>
                 <div class="text-xs sm:text-sm font-medium text-slate-400">
@@ -58,7 +126,7 @@
 
             <!-- Stat 2: Kompetisi Aktif -->
             <div class="glass-panel rounded-2xl p-6 text-center transform transition-transform hover:-translate-y-1">
-                <div class="text-3xl sm:text-4xl font-extrabold text-brand-purpleLight mb-1 font-mono">
+                <div class="text-3xl sm:text-4xl font-extrabold text-brand-purpleLight mb-1 font-mono denty-stat-number" data-count-up="{{ $activeCompetitionsCount }}">
                     {{ number_format($activeCompetitionsCount) }}
                 </div>
                 <div class="text-xs sm:text-sm font-medium text-slate-400">
@@ -68,7 +136,7 @@
 
             <!-- Stat 3: Total Partisipasi -->
             <div class="glass-panel rounded-2xl p-6 text-center transform transition-transform hover:-translate-y-1">
-                <div class="text-3xl sm:text-4xl font-extrabold text-emerald-400 mb-1 font-mono">
+                <div class="text-3xl sm:text-4xl font-extrabold text-emerald-400 mb-1 font-mono denty-stat-number" data-count-up="{{ $participationsCount }}">
                     {{ number_format($participationsCount) }}
                 </div>
                 <div class="text-xs sm:text-sm font-medium text-slate-400">
@@ -78,7 +146,7 @@
 
             <!-- Stat 4: Prestasi Terverifikasi -->
             <div class="glass-panel rounded-2xl p-6 text-center transform transition-transform hover:-translate-y-1">
-                <div class="text-3xl sm:text-4xl font-extrabold text-amber-400 mb-1 font-mono">
+                <div class="text-3xl sm:text-4xl font-extrabold text-amber-400 mb-1 font-mono denty-stat-number" data-count-up="{{ $verifiedAchievementsCount }}">
                     {{ number_format($verifiedAchievementsCount) }}
                 </div>
                 <div class="text-xs sm:text-sm font-medium text-slate-400">
