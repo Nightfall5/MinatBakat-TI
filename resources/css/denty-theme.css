@@ -171,3 +171,40 @@ footer{background:#fff!important;border-color:var(--denty-border)!important}foot
 @media(prefers-reduced-motion:reduce){.minbak-typing-caret,.minbak-orbit-float,.minbak-scene-glow,.minbak-css-orbit,.minbak-css-core,.minbak-motion-track{animation:none!important}.minbak-motion-track{transform:none!important}}
 
 #minbak-scroll-progress{position:fixed;z-index:100;top:0;left:0;width:100%;height:3px;transform:scaleX(0);transform-origin:left center;background:linear-gradient(90deg,#9BE2F3,#5FA2BE,#3D6C97);box-shadow:0 0 12px rgba(95,162,190,.35);pointer-events:none;will-change:transform}
+
+
+/* MINBAK signature visual: branching talent network (intentionally not an orbital motif) */
+.minbak-network-wrap{min-height:460px;display:flex;flex-direction:column;justify-content:center;padding:10px 0}
+.minbak-network-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#79929E;font-size:9px;font-weight:800;letter-spacing:.12em}
+.minbak-network-live{display:inline-flex;align-items:center;gap:7px;color:#568C9F}
+.minbak-network-live i{width:6px;height:6px;border-radius:50%;background:#65B89C;box-shadow:0 0 0 4px rgba(101,184,156,.13)}
+.minbak-network-stage{height:370px;margin:10px 0 12px;border-radius:26px;background:radial-gradient(ellipse at 48% 48%,rgba(194,237,244,.62),rgba(235,247,249,.78) 48%,rgba(248,251,251,.92) 82%);box-shadow:inset 0 0 45px rgba(255,255,255,.86),0 18px 42px rgba(40,105,127,.08)}
+.minbak-network-stage:before,.minbak-network-stage:after{display:none}
+.minbak-network-glow{position:absolute;left:48%;top:49%;width:180px;height:180px;border-radius:50%;background:rgba(132,213,226,.4);filter:blur(48px);transform:translate(-50%,-50%);animation:minbakNetworkGlow 6s ease-in-out infinite;pointer-events:none}
+#minbak-three-canvas{position:relative;z-index:2;display:block;width:100%;height:100%;outline:none;touch-action:pan-y}
+.minbak-network-fallback{position:absolute;z-index:1;inset:0;width:100%;height:100%;padding:8px;color:#6BA6B9;display:none;overflow:visible}
+.minbak-network-fallback-active .minbak-network-fallback{display:block}
+.minbak-network-fallback .network-line{stroke-dasharray:5 9;animation:minbakNetworkDash 12s linear infinite}
+.minbak-network-center-label{position:absolute;z-index:3;left:50%;top:50%;display:flex;align-items:center;gap:3px;color:#4E8499;font-size:8px;font-weight:800;letter-spacing:.08em;pointer-events:none;transform:translate(-50%,-50%)}
+.minbak-network-center-label strong{color:#28536C;font-size:11px}
+.minbak-network-stage .minbak-scene-coordinate{right:15px;top:14px;color:#7896A2;font-size:8px;line-height:1.7;letter-spacing:.1em;text-align:right;pointer-events:none}
+.minbak-network-stage .minbak-scene-tag{position:absolute;z-index:4;color:#73909D;font-size:8px;font-weight:800;letter-spacing:.1em;pointer-events:none}
+.minbak-network-stage .minbak-scene-tag-top{left:15px;top:15px;display:flex;align-items:center;gap:8px}
+.minbak-network-stage .minbak-scene-tag-top i{width:6px;height:6px;border-radius:50%;background:#65B89C;box-shadow:0 0 0 4px rgba(101,184,156,.13)}
+.minbak-network-stage .minbak-scene-tag-bottom{left:15px;bottom:15px}
+.minbak-network-toggle{position:absolute;z-index:5;right:14px;bottom:12px;display:inline-flex;align-items:center;gap:7px;min-height:32px;padding:0 12px;border:1px solid rgba(61,108,151,.2);border-radius:999px;background:rgba(255,255,255,.91);color:#477E96;font-size:8px;font-weight:800;letter-spacing:.07em;box-shadow:0 5px 15px rgba(9,23,33,.07);backdrop-filter:blur(10px);transition:background .2s,border-color .2s,box-shadow .2s}
+.minbak-network-toggle:hover,.minbak-network-toggle[aria-pressed=true]{border-color:#5FA2BE;background:#E8F8FA;box-shadow:0 8px 20px rgba(61,108,151,.14)}
+.minbak-network-toggle span{font-size:15px;color:#5FA2BE}
+.minbak-network-selection{display:flex;align-items:center;gap:12px;min-height:28px;padding:0 2px}
+.minbak-network-selection-label{color:#8AA0AA;font-size:8px;font-weight:800;letter-spacing:.1em}
+.minbak-network-selection strong{color:#315E72;font-size:11px;font-weight:800}
+.minbak-talent-legend{display:flex;flex-wrap:wrap;gap:7px;margin:9px 0 8px}
+.minbak-talent-chip{min-height:29px;padding:5px 10px;border:1px solid #DCE9ED;border-radius:999px;background:rgba(255,255,255,.84);color:#67818D;font-size:9px;font-weight:700;transition:transform .2s,border-color .2s,background .2s,color .2s,box-shadow .2s}
+.minbak-talent-chip:hover{transform:translateY(-2px);border-color:#9BCAD8;color:#315E72}
+.minbak-talent-chip[aria-pressed=true]{border-color:#5FA2BE;background:#E6F6F9;color:#285C73;box-shadow:0 3px 10px rgba(95,162,190,.12)}
+.minbak-network-wrap .minbak-scene-caption{justify-content:flex-start;font-size:8px}
+@keyframes minbakNetworkGlow{0%,100%{opacity:.58;transform:translate(-50%,-50%) scale(.92)}50%{opacity:.94;transform:translate(-50%,-50%) scale(1.1)}}
+@keyframes minbakNetworkDash{to{stroke-dashoffset:-120}}
+@media(max-width:1023px){.minbak-network-wrap{min-height:410px}.minbak-network-stage{height:340px}}
+@media(max-width:767px){.minbak-network-wrap{min-height:0;margin-top:4px;padding-bottom:12px}.minbak-network-stage{height:min(78vw,340px);min-height:270px;border-radius:22px}.minbak-talent-legend{gap:6px}.minbak-talent-chip{font-size:8px;padding-inline:9px}.minbak-network-selection{gap:8px}.minbak-network-stage .minbak-scene-tag-bottom{font-size:7px}}
+@media(prefers-reduced-motion:reduce){.minbak-network-glow,.minbak-network-fallback .network-line{animation:none!important}.minbak-network-fallback .network-line{stroke-dasharray:none}}
