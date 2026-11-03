@@ -124,3 +124,8 @@ main td,main th { border-color:var(--denty-border)!important; }
 @media(prefers-reduced-motion:reduce) {
   *,*::before,*::after { scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important; }
 }
+
+/* Retire legacy cosmic controls so the new visual direction has no dead toggles. */
+#toggle-video-btn,#desktop-theme-toggle-btn,#toggle-spider-btn,
+button[onclick="window.handleThemeToggle()"],
+button[onclick="window.handleAdminThemeToggle()"] { display:none!important; }
