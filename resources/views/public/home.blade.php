@@ -3,61 +3,87 @@
 @section('title', 'MINBAK TI — Minat, Bakat & Prestasi')
 
 @section('content')
-<!-- Denty-inspired MINBAK TI landing hero -->
+<!-- MINBAK TI — interactive talent orbit hero -->
 <section class="denty-hero relative">
     <div class="max-w-7xl mx-auto px-0 sm:px-2 lg:px-4">
-        <div class="denty-hero-shell">
+        <div class="denty-hero-shell minbak-hero-shell">
             <div class="denty-hero-copy denty-reveal">
                 <div class="denty-eyebrow">
                     <span class="denty-eyebrow-dot" aria-hidden="true"></span>
                     <span>DIVISI MINAT & BAKAT HMIF · {{ date('Y') }}</span>
                 </div>
-                <h1 class="denty-hero-title">Temukan bidangmu.<br><span>Kembangkan potensimu.</span></h1>
+
+                <h1 class="denty-hero-title minbak-hero-title">
+                    Kenali potensimu.
+                    <span>Temukan jalurmu.</span>
+                </h1>
+
                 <p class="denty-hero-description">
-                    Kenali kekuatan diri, jelajahi bidang yang kamu sukai, temukan kompetisi yang relevan,
-                    dan bangun rekam jejak prestasi bersama komunitas Teknik Informatika.
+                    Setiap mahasiswa punya kekuatan yang bisa dikembangkan. Temukan bidang yang sesuai,
+                    ikuti peluang kompetisi, dan bangun perjalanan prestasimu bersama MINBAK TI.
                 </p>
+
+                <div class="minbak-typing-line" aria-live="polite">
+                    <span class="minbak-typing-label">MULAI DARI</span>
+                    <strong id="minbak-typed-text">Eksplorasi minatmu</strong>
+                    <span class="minbak-typing-caret" aria-hidden="true"></span>
+                </div>
+
                 <div class="denty-hero-actions">
                     <a href="{{ route('assessment.index') }}" class="denty-btn-primary">
                         <span>Mulai Asesmen</span>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6 6 6-6 6"/>
+                        </svg>
                     </a>
-                    <a href="{{ route('competitions.index') }}" class="denty-btn-secondary"><span>Jelajahi Kompetisi</span></a>
+                    <a href="{{ route('competitions.index') }}" class="denty-btn-secondary">
+                        <span>Jelajahi Kompetisi</span>
+                    </a>
                 </div>
+
                 <div class="denty-hero-note">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v3m0 12v3m9-9h-3M6 12H3m15.36-6.36-2.12 2.12M7.76 16.24l-2.12 2.12m12.72 0-2.12-2.12M7.76 7.76 5.64 5.64"/></svg>
-                    <span>Eksplorasi minat · Peluang kompetisi · Prestasi terverifikasi</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v3m0 12v3m9-9h-3M6 12H3m15.36-6.36-2.12 2.12M7.76 16.24l-2.12 2.12m12.72 0-2.12-2.12M7.76 7.76 5.64 5.64"/>
+                    </svg>
+                    <span>Minat · Kompetisi · Partisipasi · Prestasi</span>
                 </div>
             </div>
-            <div class="denty-hero-art denty-reveal" aria-label="Pratinjau bidang minat mahasiswa">
-                <div class="denty-art-orbit" aria-hidden="true"></div>
-                <div class="denty-art-panel">
-                    <div class="denty-art-kicker"><span>RUANG EKSPLORASI</span><span class="denty-art-status">Temukan jalurmu</span></div>
-                    <h2 class="denty-art-title">Mulai dari rasa ingin tahu.</h2>
-                    <p class="denty-art-subtitle">Pilih bidang yang ingin kamu kenali lebih jauh.</p>
-                    <div class="denty-art-list">
-                        @forelse($categories->take(3) as $index => $category)
-                            <a href="{{ route('exploration.show', $category->slug) }}" class="denty-art-category">
-                                <span class="denty-art-index">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
-                                <span class="denty-art-category-copy"><strong>{{ $category->name }}</strong><small>Jelajahi bidang dan keterampilannya</small></span>
-                                <span class="denty-art-arrow" aria-hidden="true">↗</span>
-                            </a>
-                        @empty
-                            <a href="{{ route('exploration.index') }}" class="denty-art-category">
-                                <span class="denty-art-index">01</span><span class="denty-art-category-copy"><strong>Eksplorasi bidang minat</strong><small>Temukan jalur yang ingin kamu kembangkan</small></span><span class="denty-art-arrow" aria-hidden="true">↗</span>
-                            </a>
-                        @endforelse
-                    </div>
-                    <div class="denty-art-footer"><span>Minat menjadi langkah pertama.</span><strong>MINBAK TI</strong></div>
+
+            <div class="denty-hero-art minbak-orbit-wrap denty-reveal">
+                <div class="minbak-orbit-heading">
+                    <span>MINBAK / TALENT ORBIT</span>
+                    <span class="minbak-orbit-live"><i></i><span id="minbak-scene-status">SCENE READY</span></span>
                 </div>
-                <a href="{{ route('competitions.index') }}" class="denty-floating-chip">
-                    <span class="denty-floating-chip-mark" aria-hidden="true">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7V3m8 4V3M5 11h14M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12Z"/></svg>
-                    </span>
-                    <span><strong>Lihat peluang terbaru</strong><small>Temukan kompetisi yang terbuka</small></span>
-                </a>
+                <div class="minbak-scene-stage" id="minbak-scene-stage">
+                    <div class="minbak-scene-glow" aria-hidden="true"></div>
+                    <div class="minbak-css-orbit minbak-css-orbit-one" aria-hidden="true"></div>
+                    <div class="minbak-css-orbit minbak-css-orbit-two" aria-hidden="true"></div>
+                    <div class="minbak-css-core" aria-hidden="true"></div>
+                    <canvas id="minbak-three-canvas" role="img" aria-label="Objek 3D interaktif MINBAK TI. Seret untuk memutar dan aktifkan mode energi untuk melihat perubahan visual."></canvas>
+                    <span class="minbak-scene-coordinate" aria-hidden="true">TALENT<br>FIELD / 01</span>
+                    <span class="minbak-scene-tag minbak-scene-tag-top"><i></i> EXPLORE</span>
+                    <span class="minbak-scene-tag minbak-scene-tag-bottom">DISCOVER · DEVELOP · ACHIEVE</span>
+                    <button class="minbak-energy-toggle" id="minbak-energy-toggle" type="button" aria-pressed="false">
+                        <span aria-hidden="true">✳</span> AKTIFKAN MODE ENERGI
+                    </button>
+                </div>
+                <div class="minbak-scene-caption">
+                    <span>SERET UNTUK MEMUTAR</span><i></i><span>KLIK INTI UNTUK BERINTERAKSI</span>
+                </div>
+                <div class="minbak-orbit-float" aria-hidden="true">
+                    <span class="minbak-float-icon">✦</span>
+                    <span><strong>Talent in motion</strong><small>Explore your potential</small></span>
+                </div>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- Moving identity strip, inspired by the portfolio motion system -->
+<section class="minbak-motion-strip" aria-label="MINBAK TI — Eksplorasi, kompetisi, dan prestasi">
+    <div class="minbak-motion-track" aria-hidden="true">
+        <span>EXPLORE YOUR INTEREST</span><b>✳</b><span>DEVELOP YOUR SKILLS</span><b>✳</b><span>JOIN THE COMPETITION</span><b>✳</b><span>CELEBRATE ACHIEVEMENT</span><b>✳</b>
+        <span>EXPLORE YOUR INTEREST</span><b>✳</b><span>DEVELOP YOUR SKILLS</span><b>✳</b><span>JOIN THE COMPETITION</span><b>✳</b><span>CELEBRATE ACHIEVEMENT</span><b>✳</b>
     </div>
 </section>
 
