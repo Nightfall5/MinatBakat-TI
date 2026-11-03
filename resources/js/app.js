@@ -115,257 +115,289 @@ function initTypingEffect(reduceMotion) {
     });
 }
 
-function initTalentOrbit(reduceMotion) {
+function initTalentNetwork(reduceMotion) {
     const canvas = document.querySelector('#minbak-three-canvas');
     const stage = document.querySelector('#minbak-scene-stage');
-    const energyButton = document.querySelector('#minbak-energy-toggle');
+    const flowButton = document.querySelector('#minbak-energy-toggle');
     const status = document.querySelector('#minbak-scene-status');
+    const selectedLabel = document.querySelector('#minbak-selected-field');
+    const chips = [...document.querySelectorAll('.minbak-talent-chip')];
     if (!canvas || !stage) return;
 
-    const setFallback = (message) => {
+    const fallback = message => {
         if (status) status.textContent = message;
         canvas.style.display = 'none';
-        stage.classList.add('minbak-scene-fallback');
+        stage.classList.add('minbak-network-fallback-active');
     };
-
     if (!window.WebGLRenderingContext) {
-        setFallback('STATIC PREVIEW');
+        fallback('NETWORK PREVIEW');
         return;
     }
 
     let renderer;
-    let animationFrame = 0;
-    let energyMode = false;
     let controls;
-    let clock;
-    let elapsed = 0;
+    let frame = 0;
     let visible = !document.hidden;
-    let resizeObserver;
+    let flowActive = false;
+    let selectedIndex = -1;
+    let elapsed = 0;
+    const smallScreen = window.matchMedia('(max-width: 720px)').matches;
 
     try {
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(37, 1, 0.1, 80);
-        camera.position.set(0, 0.1, 7.2);
-
+        const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 80);
+        camera.position.set(0, 0.15, 8.4);
         renderer = new THREE.WebGLRenderer({
-            canvas,
-            alpha: true,
-            antialias: !window.matchMedia('(max-width: 720px)').matches,
-            powerPreference: 'low-power'
+            canvas, alpha: true, antialias: !smallScreen, powerPreference: 'low-power'
         });
-        const smallScreen = window.matchMedia('(max-width: 720px)').matches;
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, smallScreen ? 1.2 : 1.55));
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, smallScreen ? 1.15 : 1.45));
         renderer.outputColorSpace = THREE.SRGBColorSpace;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.15;
+        renderer.toneMappingExposure = 1.12;
 
-        scene.add(new THREE.HemisphereLight(0xffffff, 0x9abac7, 2.0));
-        const keyLight = new THREE.PointLight(0x9be2f3, 24, 16);
-        keyLight.position.set(3, 2.5, 3);
+        scene.add(new THREE.HemisphereLight(0xffffff, 0x9abac7, 2.1));
+        const keyLight = new THREE.PointLight(0x9be2f3, 25, 18);
+        keyLight.position.set(2.8, 3.2, 4);
         scene.add(keyLight);
-        const fillLight = new THREE.PointLight(0x5fa2be, 16, 14);
-        fillLight.position.set(-3, -2, 1);
+        const fillLight = new THREE.PointLight(0x5fa2be, 18, 16);
+        fillLight.position.set(-3.5, -2.2, 2);
         scene.add(fillLight);
 
-        const talentGroup = new THREE.Group();
-        scene.add(talentGroup);
+        const network = new THREE.Group();
+        scene.add(network);
 
-        const coreMaterial = new THREE.MeshPhysicalMaterial({
-            color: 0xb9f0f7,
-            metalness: 0.55,
-            roughness: 0.2,
-            clearcoat: 1,
-            clearcoatRoughness: 0.12,
-            emissive: 0x3d8198,
-            emissiveIntensity: 0.28
-        });
-        const core = new THREE.Mesh(
-            new THREE.TorusKnotGeometry(0.86, 0.2, 180, 24, 2, 3),
-            coreMaterial
-        );
-        talentGroup.add(core);
+        const branches = [
+            { end: [-2.75, 1.55, -0.35], mid: [-1.25, 0.82, 0.18], color: 0x5fa2be },
+            { end: [-0.45, 2.55, 0.42], mid: [-0.3, 1.2, -0.12], color: 0x80b8cf },
+            { end: [2.65, 1.75, -0.2], mid: [1.2, 0.95, 0.22], color: 0x3d6c97 },
+            { end: [2.85, -1.45, 0.4], mid: [1.3, -0.72, -0.18], color: 0x79b7b2 },
+            { end: [0.8, -2.55, -0.25], mid: [0.42, -1.15, 0.2], color: 0x8baecb },
+            { end: [-2.45, -1.85, 0.35], mid: [-1.15, -0.9, -0.2], color: 0x6aa9c0 },
+            { end: [-3.0, -0.15, -0.3], mid: [-1.35, -0.08, 0.2], color: 0x91c9d2 }
+        ];
 
-        const innerCore = new THREE.Mesh(
-            new THREE.IcosahedronGeometry(0.43, 2),
+        const hub = new THREE.Mesh(
+            new THREE.IcosahedronGeometry(0.53, 2),
             new THREE.MeshPhysicalMaterial({
-                color: 0xffffff,
-                metalness: 0.16,
-                roughness: 0.12,
-                clearcoat: 1,
-                emissive: 0x80c8db,
-                emissiveIntensity: 0.22
+                color: 0xe8fbff, metalness: 0.18, roughness: 0.16,
+                clearcoat: 1, emissive: 0x4b9eb7, emissiveIntensity: 0.26
             })
         );
-        talentGroup.add(innerCore);
-
-        const wire = new THREE.Mesh(
-            new THREE.IcosahedronGeometry(1.42, 1),
-            new THREE.MeshBasicMaterial({ color: 0x5fa2be, wireframe: true, transparent: true, opacity: 0.17 })
+        network.add(hub);
+        const hubShell = new THREE.Mesh(
+            new THREE.IcosahedronGeometry(0.72, 1),
+            new THREE.MeshBasicMaterial({ color: 0x5fa2be, wireframe: true, transparent: true, opacity: 0.2 })
         );
-        talentGroup.add(wire);
+        network.add(hubShell);
 
-        const ringColors = [0x5fa2be, 0x9be2f3, 0x8baecb];
-        const rings = [];
-        [
-            { radius: 1.75, rotation: [1.12, 0.25, 0.1] },
-            { radius: 1.98, rotation: [0.34, 1.05, 0.7] },
-            { radius: 2.12, rotation: [1.48, 0.7, 1.2] }
-        ].forEach((config, index) => {
-            const ring = new THREE.Mesh(
-                new THREE.TorusGeometry(config.radius, 0.008, 8, 180),
-                new THREE.MeshBasicMaterial({ color: ringColors[index], transparent: true, opacity: 0.52 - index * 0.08 })
+        const branchObjects = [];
+        const nodeMeshes = [];
+        const movingPackets = [];
+        const subNodes = [];
+        const hubPosition = new THREE.Vector3(0, 0, 0);
+
+        branches.forEach((branch, index) => {
+            const end = new THREE.Vector3(...branch.end);
+            const mid = new THREE.Vector3(...branch.mid);
+            const curve = new THREE.QuadraticBezierCurve3(hubPosition, mid, end);
+            const tube = new THREE.Mesh(
+                new THREE.TubeGeometry(curve, 48, 0.012, 6, false),
+                new THREE.MeshBasicMaterial({ color: branch.color, transparent: true, opacity: 0.64 })
             );
-            ring.rotation.set(...config.rotation);
-            talentGroup.add(ring);
-            rings.push(ring);
-        });
+            network.add(tube);
 
-        const satelliteGeometry = new THREE.IcosahedronGeometry(0.085, 1);
-        const satellites = [];
-        [
-            { radius: 1.88, speed: 0.31, phase: 0.4, tilt: 0.25, color: 0x5fa2be },
-            { radius: 2.05, speed: -0.23, phase: 2.6, tilt: 1.1, color: 0x3d6c97 },
-            { radius: 1.68, speed: 0.38, phase: 4.4, tilt: 2.1, color: 0x9be2f3 },
-            { radius: 2.17, speed: -0.17, phase: 5.6, tilt: 0.8, color: 0x78b6c9 }
-        ].forEach((config, index) => {
-            const material = new THREE.MeshStandardMaterial({
-                color: config.color,
-                metalness: 0.36,
-                roughness: 0.2,
-                emissive: config.color,
-                emissiveIntensity: 0.18
+            const node = new THREE.Group();
+            node.position.copy(end);
+            const material = new THREE.MeshPhysicalMaterial({
+                color: branch.color, metalness: 0.2, roughness: 0.2,
+                clearcoat: 1, emissive: branch.color, emissiveIntensity: 0.2
             });
-            const mesh = new THREE.Mesh(satelliteGeometry, material);
-            talentGroup.add(mesh);
-            satellites.push({ mesh, ...config, index });
+            const sphere = new THREE.Mesh(new THREE.IcosahedronGeometry(0.17, 2), material);
+            const halo = new THREE.Mesh(
+                new THREE.SphereGeometry(0.28, 18, 14),
+                new THREE.MeshBasicMaterial({ color: branch.color, transparent: true, opacity: 0.12, side: THREE.DoubleSide })
+            );
+            node.add(sphere, halo);
+            network.add(node);
+            nodeMeshes.push({ group: node, sphere, halo, material, index });
+
+            const packet = new THREE.Mesh(
+                new THREE.SphereGeometry(0.045, 10, 8),
+                new THREE.MeshBasicMaterial({ color: 0xffffff })
+            );
+            network.add(packet);
+            movingPackets.push({ mesh: packet, curve, offset: index / branches.length });
+
+            // A small secondary connection makes each branch feel like a pathway, not an orbit.
+            const split = curve.getPointAt(0.64);
+            const subEnd = split.clone().add(new THREE.Vector3((index % 2 ? -0.45 : 0.45), index % 2 ? -0.34 : 0.34, 0.16));
+            const subCurve = new THREE.QuadraticBezierCurve3(hubPosition, split.clone().lerp(subEnd, 0.48), subEnd);
+            const subLine = new THREE.Mesh(
+                new THREE.TubeGeometry(subCurve, 24, 0.006, 5, false),
+                new THREE.MeshBasicMaterial({ color: branch.color, transparent: true, opacity: 0.28 })
+            );
+            network.add(subLine);
+            const subNode = new THREE.Mesh(
+                new THREE.SphereGeometry(0.055, 10, 8),
+                new THREE.MeshBasicMaterial({ color: branch.color, transparent: true, opacity: 0.78 })
+            );
+            subNode.position.copy(subEnd);
+            network.add(subNode);
+            subNodes.push(subNode);
+            branchObjects.push({ tube, material: tube.material, subLine, curve });
         });
 
-        const starCount = smallScreen ? 180 : 360;
-        const positions = new Float32Array(starCount * 3);
-        for (let i = 0; i < starCount; i += 1) {
-            const radius = 2.9 + Math.random() * 5.5;
-            const theta = Math.random() * Math.PI * 2;
-            const phi = Math.acos(Math.random() * 2 - 1);
-            positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-            positions[i * 3 + 1] = radius * Math.cos(phi);
-            positions[i * 3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
+        // Small ambient points are scattered in a rectangular field, not arranged in rings.
+        const dustCount = smallScreen ? 70 : 125;
+        const dustPositions = new Float32Array(dustCount * 3);
+        for (let i = 0; i < dustCount; i += 1) {
+            dustPositions[i * 3] = (Math.random() - 0.5) * 8;
+            dustPositions[i * 3 + 1] = (Math.random() - 0.5) * 5.6;
+            dustPositions[i * 3 + 2] = (Math.random() - 0.5) * 2.4 - 1;
         }
-        const starGeometry = new THREE.BufferGeometry();
-        starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        const stars = new THREE.Points(
-            starGeometry,
-            new THREE.PointsMaterial({ color: 0x5d9db5, size: smallScreen ? 0.022 : 0.026, transparent: true, opacity: 0.58 })
+        const dustGeometry = new THREE.BufferGeometry();
+        dustGeometry.setAttribute('position', new THREE.BufferAttribute(dustPositions, 3));
+        const dust = new THREE.Points(
+            dustGeometry,
+            new THREE.PointsMaterial({ color: 0x78aebe, size: 0.025, transparent: true, opacity: 0.48 })
         );
-        scene.add(stars);
+        scene.add(dust);
 
         controls = new OrbitControls(camera, canvas);
         controls.enableDamping = true;
-        controls.dampingFactor = 0.06;
+        controls.dampingFactor = 0.065;
         controls.enablePan = false;
         controls.enableZoom = false;
-        controls.rotateSpeed = 0.55;
-        controls.autoRotate = !reduceMotion;
-        controls.autoRotateSpeed = 0.58;
-        controls.minPolarAngle = 0.7;
-        controls.maxPolarAngle = 2.4;
+        controls.rotateSpeed = 0.48;
+        controls.minPolarAngle = 0.86;
+        controls.maxPolarAngle = 2.28;
 
         const resize = () => {
             const rect = stage.getBoundingClientRect();
             const width = Math.max(1, rect.width);
             const height = Math.max(1, rect.height);
             camera.aspect = width / height;
-            camera.fov = width < 420 ? 43 : 37;
+            camera.fov = width < 420 ? 44 : 38;
             camera.updateProjectionMatrix();
             renderer.setSize(width, height, false);
         };
-        resizeObserver = new ResizeObserver(resize);
+        const resizeObserver = new ResizeObserver(resize);
         resizeObserver.observe(stage);
         resize();
 
+        const setSelected = index => {
+            selectedIndex = Number.isInteger(index) && index >= 0 && index < branches.length ? index : -1;
+            nodeMeshes.forEach(({ group, sphere, halo, material, index: nodeIndex }) => {
+                const active = selectedIndex === -1 || selectedIndex === nodeIndex;
+                material.emissiveIntensity = active ? (selectedIndex === nodeIndex ? 0.7 : 0.24) : 0.06;
+                halo.material.opacity = active ? (selectedIndex === nodeIndex ? 0.3 : 0.1) : 0.025;
+                group.scale.setScalar(selectedIndex === nodeIndex ? 1.35 : (active ? 1 : 0.82));
+                sphere.material.color.setHex(active ? branches[nodeIndex].color : 0xb8cbd2);
+            });
+            branchObjects.forEach(({ material, subLine }, branchIndex) => {
+                const active = selectedIndex === -1 || selectedIndex === branchIndex;
+                material.opacity = active ? (selectedIndex === branchIndex ? 1 : 0.58) : 0.09;
+                subLine.material.opacity = active ? 0.28 : 0.025;
+            });
+            movingPackets.forEach(({ mesh }, packetIndex) => {
+                mesh.visible = selectedIndex === -1 || selectedIndex === packetIndex;
+            });
+            chips.forEach(chip => {
+                const active = Number(chip.dataset.talentIndex) === selectedIndex;
+                chip.setAttribute('aria-pressed', String(active));
+            });
+            const selectedChip = chips.find(chip => Number(chip.dataset.talentIndex) === selectedIndex);
+            if (selectedLabel) selectedLabel.textContent = selectedChip ? selectedChip.textContent.trim() : 'Pilih salah satu bidang minat';
+            if (status) status.textContent = selectedIndex === -1 ? 'NETWORK ACTIVE' : 'FIELD ' + String(selectedIndex + 1).padStart(2, '0') + ' SELECTED';
+        };
+
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                const index = Number(chip.dataset.talentIndex);
+                setSelected(selectedIndex === index ? -1 : index);
+            });
+        });
+
+        const toggleFlow = () => {
+            flowActive = !flowActive;
+            if (flowButton) {
+                flowButton.setAttribute('aria-pressed', String(flowActive));
+                flowButton.innerHTML = flowActive
+                    ? '<span aria-hidden="true">✦</span> ALIRAN AKTIF'
+                    : '<span aria-hidden="true">⌁</span> AKTIFKAN ALIRAN';
+            }
+            if (status) status.textContent = flowActive ? 'SIGNALS FLOWING' : (selectedIndex < 0 ? 'NETWORK ACTIVE' : 'FIELD SELECTED');
+        };
+        flowButton?.addEventListener('click', toggleFlow);
+
         const raycaster = new THREE.Raycaster();
         const pointer = new THREE.Vector2();
-        let pointerDown = null;
-        canvas.addEventListener('pointerdown', event => {
-            pointerDown = { x: event.clientX, y: event.clientY };
-        });
+        let down = null;
+        canvas.addEventListener('pointerdown', event => { down = { x: event.clientX, y: event.clientY }; });
         canvas.addEventListener('pointerup', event => {
-            if (!pointerDown) return;
-            const moved = Math.hypot(event.clientX - pointerDown.x, event.clientY - pointerDown.y);
-            pointerDown = null;
-            if (moved > 7) return;
-            const bounds = canvas.getBoundingClientRect();
-            pointer.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
-            pointer.y = -(((event.clientY - bounds.top) / bounds.height) * 2 - 1);
+            if (!down) return;
+            const distance = Math.hypot(event.clientX - down.x, event.clientY - down.y);
+            down = null;
+            if (distance > 6) return;
+            const rect = canvas.getBoundingClientRect();
+            pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            pointer.y = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
             raycaster.setFromCamera(pointer, camera);
-            if (raycaster.intersectObjects([core, innerCore], false).length) toggleEnergy();
+            const hit = raycaster.intersectObjects(nodeMeshes.map(node => node.sphere), false)[0];
+            if (hit) {
+                const target = nodeMeshes.find(node => node.sphere === hit.object);
+                setSelected(selectedIndex === target.index ? -1 : target.index);
+            }
+        });
+        canvas.addEventListener('pointermove', event => {
+            const rect = canvas.getBoundingClientRect();
+            const x = (event.clientX - rect.left) / rect.width - 0.5;
+            const y = (event.clientY - rect.top) / rect.height - 0.5;
+            keyLight.position.x = 2.8 + x * 1.5;
+            keyLight.position.y = 3.2 - y * 1.2;
         });
 
-        const toggleEnergy = () => {
-            energyMode = !energyMode;
-            if (energyButton) {
-                energyButton.setAttribute('aria-pressed', String(energyMode));
-                energyButton.innerHTML = energyMode
-                    ? '<span aria-hidden="true">✦</span> MODE ENERGI AKTIF'
-                    : '<span aria-hidden="true">✳</span> AKTIFKAN MODE ENERGI';
-            }
-            if (controls) controls.autoRotate = !reduceMotion && !energyMode;
-            coreMaterial.emissiveIntensity = energyMode ? 0.85 : 0.28;
-            if (status) status.textContent = energyMode ? 'ENERGY MODE' : 'SCENE READY';
-        };
-        energyButton?.addEventListener('click', toggleEnergy);
-
-        clock = new THREE.Clock();
+        const clock = new THREE.Clock();
         const animate = () => {
             if (!visible) return;
-            animationFrame = window.requestAnimationFrame(animate);
+            frame = window.requestAnimationFrame(animate);
             const delta = Math.min(clock.getDelta(), 0.04);
-            const motionDelta = (!reduceMotion || energyMode) ? delta : 0;
-            elapsed += motionDelta;
-
-            const pulse = 1 + Math.sin(elapsed * (energyMode ? 3 : 1.45)) * (energyMode ? 0.055 : 0.022);
-            talentGroup.scale.setScalar(pulse);
-            core.rotation.x += motionDelta * (energyMode ? 0.42 : 0.18);
-            core.rotation.y += motionDelta * (energyMode ? 0.58 : 0.28);
-            innerCore.rotation.x -= motionDelta * 0.16;
-            innerCore.rotation.y += motionDelta * 0.21;
-            wire.rotation.y -= motionDelta * 0.035;
-            wire.rotation.x += motionDelta * 0.018;
-            rings[0].rotation.z += motionDelta * 0.035;
-            rings[1].rotation.x -= motionDelta * 0.024;
-            rings[2].rotation.y += motionDelta * 0.02;
-            stars.rotation.y += motionDelta * 0.003;
-
-            satellites.forEach(satellite => {
-                const angle = elapsed * satellite.speed + satellite.phase;
-                satellite.mesh.position.set(
-                    Math.cos(angle) * satellite.radius,
-                    Math.sin(angle * 1.12 + satellite.tilt) * satellite.radius * 0.42,
-                    Math.sin(angle) * satellite.radius * 0.75
-                );
-                satellite.mesh.rotation.x += motionDelta * (0.45 + satellite.index * 0.08);
-                satellite.mesh.rotation.y += motionDelta * 0.4;
+            const motion = reduceMotion ? 0 : delta;
+            elapsed += motion * (flowActive ? 1.9 : 1);
+            hub.rotation.y += motion * (flowActive ? 0.42 : 0.13);
+            hub.rotation.x = Math.sin(elapsed * 0.42) * 0.12;
+            hubShell.rotation.y -= motion * 0.08;
+            hubShell.rotation.z += motion * 0.035;
+            hub.scale.setScalar(1 + (reduceMotion ? 0 : Math.sin(elapsed * (flowActive ? 3.1 : 1.35)) * (flowActive ? 0.075 : 0.025)));
+            dust.rotation.y += motion * 0.004;
+            nodeMeshes.forEach(({ group, index }) => {
+                group.position.y = branches[index].end[1] + (reduceMotion ? 0 : Math.sin(elapsed * 1.15 + index) * 0.035);
             });
-
+            movingPackets.forEach(({ mesh, curve, offset }, index) => {
+                const t = (elapsed * (flowActive ? 0.23 : 0.105) + offset) % 1;
+                mesh.position.copy(curve.getPointAt(t));
+                mesh.scale.setScalar(flowActive ? 1.35 : 1);
+            });
             controls.update();
             renderer.render(scene, camera);
         };
 
-        if (status) status.textContent = 'SCENE READY';
+        setSelected(-1);
+        if (status) status.textContent = 'NETWORK ACTIVE';
         document.addEventListener('visibilitychange', () => {
             visible = !document.hidden;
-            if (!renderer) return;
             if (visible) {
                 clock.start();
                 animate();
             } else {
-                window.cancelAnimationFrame(animationFrame);
+                window.cancelAnimationFrame(frame);
                 clock.stop();
             }
         });
         animate();
     } catch (error) {
-        console.error('MINBAK 3D scene failed:', error);
-        setFallback('STATIC PREVIEW');
+        console.error('MINBAK talent network failed:', error);
+        fallback('NETWORK PREVIEW');
     }
 }
 
@@ -390,7 +422,7 @@ function initMinbakInteractions() {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     initRevealAndCounters(reduceMotion);
     initTypingEffect(reduceMotion);
-    initTalentOrbit(reduceMotion);
+    initTalentNetwork(reduceMotion);
     initHeaderAndScrollEffects();
 }
 
