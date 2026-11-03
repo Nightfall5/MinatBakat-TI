@@ -1,41 +1,60 @@
 @extends('layouts.app')
 
-@section('title', 'MINBAK TI — Talent & Competition Hub')
+@section('title', 'MINBAK TI — Minat, Bakat & Prestasi')
 
 @section('content')
-<!-- Hero Section -->
-<section class="relative pt-12 pb-20 md:pt-20 md:pb-32 overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="text-center max-w-3xl mx-auto space-y-6">
-            <!-- Badge announcement -->
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-brand-cyan/40 text-xs font-mono text-brand-cyan shadow-glow-cyan animate-pulse-slow">
-                <span class="w-2 h-2 rounded-full bg-brand-cyan"></span>
-                <span>DIVISI MINAT DAN BAKAT HMIF {{ date('Y') }}</span>
+<!-- Denty-inspired MINBAK TI landing hero -->
+<section class="denty-hero relative">
+    <div class="max-w-7xl mx-auto px-0 sm:px-2 lg:px-4">
+        <div class="denty-hero-shell">
+            <div class="denty-hero-copy denty-reveal">
+                <div class="denty-eyebrow">
+                    <span class="denty-eyebrow-dot" aria-hidden="true"></span>
+                    <span>DIVISI MINAT & BAKAT HMIF · {{ date('Y') }}</span>
+                </div>
+                <h1 class="denty-hero-title">Temukan bidangmu.<br><span>Kembangkan potensimu.</span></h1>
+                <p class="denty-hero-description">
+                    Kenali kekuatan diri, jelajahi bidang yang kamu sukai, temukan kompetisi yang relevan,
+                    dan bangun rekam jejak prestasi bersama komunitas Teknik Informatika.
+                </p>
+                <div class="denty-hero-actions">
+                    <a href="{{ route('assessment.index') }}" class="denty-btn-primary">
+                        <span>Mulai Asesmen</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                    </a>
+                    <a href="{{ route('competitions.index') }}" class="denty-btn-secondary"><span>Jelajahi Kompetisi</span></a>
+                </div>
+                <div class="denty-hero-note">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v3m0 12v3m9-9h-3M6 12H3m15.36-6.36-2.12 2.12M7.76 16.24l-2.12 2.12m12.72 0-2.12-2.12M7.76 7.76 5.64 5.64"/></svg>
+                    <span>Eksplorasi minat · Peluang kompetisi · Prestasi terverifikasi</span>
+                </div>
             </div>
-
-            <!-- Main Headline -->
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
-                Temukan Potensimu. <br>
-                <span class="bg-gradient-to-r from-brand-cyan via-purple-300 to-brand-purple bg-clip-text text-transparent glow-text-cyan">
-                    Kembangkan Skill-mu.
-                </span> <br>
-                Raih Prestasimu.
-            </h1>
-
-            <!-- Subheadline -->
-            <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
-                Platform Minat dan Bakat Teknik Informatika untuk mengeksplorasi bidang yang kamu sukai, menemukan kompetisi yang relevan, dan membangun rekam jejak prestasi yang terverifikasi.
-            </p>
-
-            <!-- Action CTAs -->
-            <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="{{ route('assessment.index') }}" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-xl font-bold bg-gradient-to-r from-brand-purple to-brand-cyan hover:opacity-95 text-white shadow-glow-combined transition-all transform hover:-translate-y-0.5">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <span>Temukan Minatku</span>
-                </a>
-                <a href="{{ route('competitions.index') }}" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-xl font-bold bg-brand-card hover:bg-brand-cardhover text-slate-200 border border-brand-border/80 hover:border-brand-cyan/60 transition-all transform hover:-translate-y-0.5">
-                    <svg class="w-5 h-5 text-brand-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                    <span>Jelajahi Kompetisi</span>
+            <div class="denty-hero-art denty-reveal" aria-label="Pratinjau bidang minat mahasiswa">
+                <div class="denty-art-orbit" aria-hidden="true"></div>
+                <div class="denty-art-panel">
+                    <div class="denty-art-kicker"><span>RUANG EKSPLORASI</span><span class="denty-art-status">Temukan jalurmu</span></div>
+                    <h2 class="denty-art-title">Mulai dari rasa ingin tahu.</h2>
+                    <p class="denty-art-subtitle">Pilih bidang yang ingin kamu kenali lebih jauh.</p>
+                    <div class="denty-art-list">
+                        @forelse($categories->take(3) as $index => $category)
+                            <a href="{{ route('exploration.show', $category->slug) }}" class="denty-art-category">
+                                <span class="denty-art-index">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                                <span class="denty-art-category-copy"><strong>{{ $category->name }}</strong><small>Jelajahi bidang dan keterampilannya</small></span>
+                                <span class="denty-art-arrow" aria-hidden="true">↗</span>
+                            </a>
+                        @empty
+                            <a href="{{ route('exploration.index') }}" class="denty-art-category">
+                                <span class="denty-art-index">01</span><span class="denty-art-category-copy"><strong>Eksplorasi bidang minat</strong><small>Temukan jalur yang ingin kamu kembangkan</small></span><span class="denty-art-arrow" aria-hidden="true">↗</span>
+                            </a>
+                        @endforelse
+                    </div>
+                    <div class="denty-art-footer"><span>Minat menjadi langkah pertama.</span><strong>MINBAK TI</strong></div>
+                </div>
+                <a href="{{ route('competitions.index') }}" class="denty-floating-chip">
+                    <span class="denty-floating-chip-mark" aria-hidden="true">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7V3m8 4V3M5 11h14M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12Z"/></svg>
+                    </span>
+                    <span><strong>Lihat peluang terbaru</strong><small>Temukan kompetisi yang terbuka</small></span>
                 </a>
             </div>
         </div>
@@ -48,7 +67,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
             <!-- Stat 1: Mahasiswa Terdaftar -->
             <div class="glass-panel rounded-2xl p-6 text-center transform transition-transform hover:-translate-y-1">
-                <div class="text-3xl sm:text-4xl font-extrabold text-brand-cyan mb-1 font-mono">
+                <div class="text-3xl sm:text-4xl font-extrabold text-brand-cyan mb-1 font-mono denty-stat-number" data-count-up="{{ $registeredStudentsCount }}">
                     {{ number_format($registeredStudentsCount) }}
                 </div>
                 <div class="text-xs sm:text-sm font-medium text-slate-400">
@@ -58,7 +77,7 @@
 
             <!-- Stat 2: Kompetisi Aktif -->
             <div class="glass-panel rounded-2xl p-6 text-center transform transition-transform hover:-translate-y-1">
-                <div class="text-3xl sm:text-4xl font-extrabold text-brand-purpleLight mb-1 font-mono">
+                <div class="text-3xl sm:text-4xl font-extrabold text-brand-purpleLight mb-1 font-mono denty-stat-number" data-count-up="{{ $activeCompetitionsCount }}">
                     {{ number_format($activeCompetitionsCount) }}
                 </div>
                 <div class="text-xs sm:text-sm font-medium text-slate-400">
@@ -68,7 +87,7 @@
 
             <!-- Stat 3: Total Partisipasi -->
             <div class="glass-panel rounded-2xl p-6 text-center transform transition-transform hover:-translate-y-1">
-                <div class="text-3xl sm:text-4xl font-extrabold text-emerald-400 mb-1 font-mono">
+                <div class="text-3xl sm:text-4xl font-extrabold text-emerald-400 mb-1 font-mono denty-stat-number" data-count-up="{{ $participationsCount }}">
                     {{ number_format($participationsCount) }}
                 </div>
                 <div class="text-xs sm:text-sm font-medium text-slate-400">
@@ -78,7 +97,7 @@
 
             <!-- Stat 4: Prestasi Terverifikasi -->
             <div class="glass-panel rounded-2xl p-6 text-center transform transition-transform hover:-translate-y-1">
-                <div class="text-3xl sm:text-4xl font-extrabold text-amber-400 mb-1 font-mono">
+                <div class="text-3xl sm:text-4xl font-extrabold text-amber-400 mb-1 font-mono denty-stat-number" data-count-up="{{ $verifiedAchievementsCount }}">
                     {{ number_format($verifiedAchievementsCount) }}
                 </div>
                 <div class="text-xs sm:text-sm font-medium text-slate-400">
