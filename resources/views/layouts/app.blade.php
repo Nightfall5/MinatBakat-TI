@@ -34,6 +34,7 @@
     @stack('styles')
 </head>
 <body class="bg-brand-navy text-brand-light min-h-screen flex flex-col relative selection:bg-brand-purple selection:text-white transition-colors duration-300" x-data="{ mobileMenuOpen: false }">
+    <div id="minbak-scroll-progress" aria-hidden="true"></div>
 
     <!-- Real Galaxy Big Bang Video Background Loop -->
     <div class="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none">
