@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'MINBAK TI — Talent & Competition Hub')</title>
+    <title>@yield('title', 'MINBAK TI — Minat, Bakat & Prestasi')</title>
     <meta name="description" content="@yield('meta_description', 'Sistem Informasi Minat, Bakat, Kompetisi, dan Prestasi Mahasiswa Teknik Informatika. Eksplorasi skill, rekomendasi talenta, dan rekam jejak prestasi.')">
 
     <!-- Google Fonts: Inter -->
@@ -65,27 +65,13 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex items-center justify-between h-20">
-                <!-- Brand / Logo with Singularity Photon Corona -->
-                <a href="{{ route('home') }}" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-cyan rounded-lg p-1">
-                    <div class="relative">
-                        <!-- Singularity Photon Corona Ring -->
-                        <div class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-brand-cyan via-brand-purple to-pink-500 opacity-60 blur-sm group-hover:opacity-100 animate-spin-slow transition-opacity"></div>
-                        <div class="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-cyan p-0.5 shadow-glow-combined group-hover:scale-105 transition-transform duration-300">
-                            <div class="w-full h-full bg-brand-surface rounded-[10px] flex items-center justify-center">
-                                <svg class="w-5 h-5 text-brand-cyan group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white via-slate-100 to-brand-cyan bg-clip-text text-transparent">
-                            {{ \App\Models\AppSetting::get('app_short_name', 'MINBAK TI') }}
-                        </span>
-                        <span class="hidden sm:block text-[11px] font-mono tracking-wider text-brand-muted uppercase">
-                            Talent & Competition Hub
-                        </span>
-                    </div>
+                <!-- MINBAK TI brand lockup -->
+                <a href="{{ route('home') }}" class="denty-brand focus:outline-none focus:ring-2 focus:ring-brand-cyan rounded-xl p-1">
+                    <span class="denty-brand-mark" aria-hidden="true">M</span>
+                    <span class="denty-brand-copy">
+                        <span class="denty-brand-name">MINBAK <span>TI</span></span>
+                        <span class="denty-brand-tagline">MINAT · BAKAT · PRESTASI</span>
+                    </span>
                 </a>
 
                 <!-- Desktop Navigation Links -->
@@ -322,7 +308,7 @@
                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                         </div>
                         <span class="text-lg font-bold text-white tracking-tight">
-                            {{ \App\Models\AppSetting::get('app_name', 'MINBAK TI — Talent & Competition Hub') }}
+                            {{ \App\Models\AppSetting::get('app_name', 'MINBAK TI — Minat · Bakat · Prestasi') }}
                         </span>
                     </div>
                     <p class="text-sm text-brand-muted max-w-md leading-relaxed">
